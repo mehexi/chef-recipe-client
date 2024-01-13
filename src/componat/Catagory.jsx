@@ -26,7 +26,7 @@ const Category = ({ selectCatagoryName }) => {
   
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 sticky top-[60px]">
       <h1 className="text-2xl font-semibold">Recipes</h1>
       <div className="flex flex-col gap-3">
         <button

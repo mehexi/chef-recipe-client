@@ -19,7 +19,7 @@ const MealCard = ({ data }) => {
     setFev(!fev);
   };
 
-  console.log(strCategory);
+  // console.log(strCategory);
 
   return (
     <>
@@ -35,7 +35,7 @@ const MealCard = ({ data }) => {
           />
         </div>
         <div className="flex justify-between items-center">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col ">
             <h1 className="text-lg font-semibold">{strMeal}</h1>
             <div className="flex gap-2  align-middle items-center">
               <GoStarFill className="text-yellow-400"></GoStarFill>{" "}
