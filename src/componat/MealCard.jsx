@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GoHeart, GoHeartFill, GoStarFill } from "react-icons/go";
+import { Link } from "react-router-dom";
 
 const MealCard = ({ data }) => {
   // console.log(data)
@@ -10,12 +11,15 @@ const MealCard = ({ data }) => {
     strInstructions,
     strMeal,
     rating,
-    author
+    author,
+    idMeal
   } = data;
 
   const [fev, setFev] = useState(true);
 
-  const handleFev = () => {
+  const handleFev = (e) => {
+    
+    e.preventDefault()
     setFev(!fev);
   };
 
@@ -23,6 +27,7 @@ const MealCard = ({ data }) => {
 
   return (
     <>
+      <Link to={`/${idMeal}`}>
       <div
         onDoubleClick={handleFev}
         className="col-span-1 flex flex-col gap-3 group"
@@ -43,7 +48,7 @@ const MealCard = ({ data }) => {
               <h1 className="">{author}</h1>
             </div>
           </div>
-          <div onClick={handleFev}>
+          <div className="z-10" onClick={handleFev}>
             {fev ? (
               <GoHeart className="text-2xl text-gray-300 hover:text-primary-color hover:scale-105"></GoHeart>
             ) : (
@@ -51,7 +56,8 @@ const MealCard = ({ data }) => {
             )}
           </div>
         </div>
-      </div>
+        </div>
+        </Link>
     </>
   );
 };
