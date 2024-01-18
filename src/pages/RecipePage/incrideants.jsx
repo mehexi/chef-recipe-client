@@ -1,13 +1,17 @@
 import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Navigate, useLoaderData, useNavigate } from 'react-router-dom';
 import { FaFacebookF } from "react-icons/fa";
 
 const Incrideants = () => {
     const data = useLoaderData()
-
+    const navigate = useNavigate()
    
 
     const { strIngredients } = data
+
+    if (!strIngredients) {
+     return  <Navigate to={'*'} replace></Navigate>
+    }
     
     console.log(strIngredients)
 
@@ -15,7 +19,7 @@ const Incrideants = () => {
         <div className='col-span-2'>
             <h1 className='text-2xl font-semibold mb-6'>Ingredients</h1>
             {
-                strIngredients.map(strIngredient => <h1 className='p-3 pl-0 text-xl border-b'>{strIngredient}</h1>)
+                strIngredients?.map(strIngredient => <h1 className='p-3 pl-0 text-xl border-b'>{strIngredient}</h1>)
             }
             <div className='flex flex-col mt-6'>
                 <h1 className='text-2xl font-semibold mb-6'>Share Recipe</h1>

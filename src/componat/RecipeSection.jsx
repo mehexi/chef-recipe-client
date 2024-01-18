@@ -10,7 +10,7 @@ const RecipeSection = ({ catagoryName }) => {
   const [meals, setMeals] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/meals")
+    fetch("https://cehef-recipe-server.vercel.app/meals")
       .then((res) => res.json())
       .then((data) => setMeals(data));
   }, []);

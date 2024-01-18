@@ -8,7 +8,7 @@ const Category = ({ selectCatagoryName }) => {
   // const [active , setActive] = useState(false)
 
   useEffect(() => {
-    fetch("http://localhost:3000/catagory")
+    fetch("https://cehef-recipe-server.vercel.app/catagory")
       .then((res) => res.json())
       .then((data) => setCategory(data));
   }, []);

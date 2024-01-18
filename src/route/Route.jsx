@@ -6,6 +6,8 @@ import RecipePage from "../pages/RecipePage/RecipePage";
 import Login from "../pages/login/Login";
 import Register from "../pages/Register/Register";
 import PrivetRoute from "./privetRoute";
+import ErrorBoundary from "../pages/404error/Error";
+import Error from "../pages/404error/Error";
 
 
 const router = createBrowserRouter([
@@ -21,7 +23,7 @@ const router = createBrowserRouter([
         path: ":mealId",
         element: <PrivetRoute><RecipePage></RecipePage></PrivetRoute>,
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/meals/${params.mealId}`)
+          fetch(`https://cehef-recipe-server.vercel.app/meals/${params.mealId}`)
       }
     ],
   },
@@ -32,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element:<Register></Register>
+  },
+  {
+    path: "*",
+    element:<Error></Error>
   }
 ]);
 

@@ -8,7 +8,7 @@ const VideoSection = () => {
 
     const [img, setImg] = useState([])
     useEffect(() => {
-        fetch('http://localhost:3000/meals')
+        fetch('https://cehef-recipe-server.vercel.app/meals')
             .then(response => response.json())
         .then(data => setImg(data))
     },[])
