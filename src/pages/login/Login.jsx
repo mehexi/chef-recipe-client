@@ -1,14 +1,33 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../auth/AuthProvider";
 
 const Login = () => {
   const [randomImageUrl, setRandomImageUrl] = useState("");
+  const { logIn } = useContext(AuthContext)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/'
+
+  console.log(location)
 
   const apiKey = "i6za9LU6qUpLDmC4vyTDvQ==IMfxGsTd7MfItYbZ"; // Replace with your actual API key
   const category = "food";
 
-  const handleLogin = () => {
-    // Your login logic here
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target
+    const email = form.email.value
+    const password = form.password.value
+
+    logIn(email, password)
+    .then((data) => {
+      console.log(data.user);
+      navigate(from,{replace:true})
+    })
+    .catch((error) => {
+      console.log(  error.message);
+    });
   };
 
   React.useEffect(() => {
@@ -29,13 +48,14 @@ const Login = () => {
 
   return (
     <div className="grid w-2/3 grid-cols-2 mx-auto h-lvh justify-center items-center">
-      <div className="flex flex-col w-9/12 gap-6">
+      <form onSubmit={handleLogin} className="flex flex-col w-9/12 gap-6">
         <h1 className="text-2xl font-semibold">Login</h1>
         <label htmlFor="">
           <input
             className="w-full border px-6 py-3 rounded-full outline-none"
             type="email"
             placeholder="Email here"
+            name="email"
           />
         </label>
         <label htmlFor="">
@@ -43,16 +63,16 @@ const Login = () => {
             className="w-full border px-6 py-3 rounded-full outline-none"
             type="password"
             placeholder="Min 8 Characters"
+            name="password"
           />
         </label>
         <span className="mx-auto">Forgot your Password?</span>
         <button
           className="px-9 text-white mx-auto py-3 rounded-full bg-primary-color w-fit"
-          onClick={handleLogin}
         >
           Login
         </button>
-      </div>
+      </form>
       <div className="relative h-5/6">
         <img
           src={randomImageUrl}

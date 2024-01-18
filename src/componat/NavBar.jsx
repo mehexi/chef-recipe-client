@@ -1,23 +1,31 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { AuthContext } from "../auth/AuthProvider";
+import { Audio, Oval, ThreeDots } from "react-loader-spinner";
 
 const NavBar = () => {
-  const { user, loading,logOut } = useContext(AuthContext);
-  console.log(user);
+  const { user, loading, logOut } = useContext(AuthContext);
+  // console.log(user);
 
-    const getRandomColor = () => {
-      
-    const generateColor = () => Math.floor(Math.random() * 16777215).toString(16);
-      let randomColor = "#" + generateColor();
-      
+  const getRandomColor = () => {
+    const generateColor = () =>
+      Math.floor(Math.random() * 16777215).toString(16);
+    let randomColor = "#" + generateColor();
+
     while (randomColor === "#ffffff") {
       randomColor = "#" + generateColor();
     }
-  
+
     return randomColor;
+  };
+
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logOut().then(() => {
+      navigate("/");
+    });
   };
 
   return (
@@ -36,26 +44,50 @@ const NavBar = () => {
       <div className="flex gap-6 items-center">
         <CiSearch className="text-2xl"></CiSearch>
         {loading ? (
-         ''
+          <div className="w-[35px] h-[35px] rounded-full flex justify-center items-center text-xl font-semibold text-white bg-gray-50">
+            <Oval
+              visible={true}
+              height="30"
+              width="30"
+              color="#eb4a36"
+              radius="9"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+            />
+          </div>
         ) : (
           <>
             {user ? (
               <div className="flex gap-6 items-center ">
-                <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center text-xl font-semibold text-white" style={{backgroundColor:getRandomColor()}}>
+                <div
+                  className="w-[35px] h-[35px] rounded-full flex justify-center items-center text-xl font-semibold text-white"
+                  style={{ backgroundColor: getRandomColor() }}
+                >
                   <h1 className="text-center">
-                    {user.displayName.charAt(0).toUpperCase()}
+                    {user.displayName
+                      ? user.displayName?.charAt(0).toUpperCase()
+                      : ""}
                   </h1>
                 </div>
-                <button onClick={logOut} className="text-2xl text-gray-500">
+                <button
+                  onClick={handleLogout}
+                  className="text-2xl text-gray-500"
+                  title="sign out"
+                >
                   <RiLogoutCircleLine />
                 </button>
               </div>
             ) : (
               <div className="flex gap-6 items-center ">
-                <button>Sign in</button>
-                <button className="px-9 py-2 bg-primary-color text-white rounded-full">
-                  Sign up
-                </button>
+                <Link to={"/login"}>
+                  <button>Sign in</button>
+                </Link>
+                <Link to={"/register"}>
+                  <button className="px-9 py-2 bg-primary-color text-white rounded-full">
+                    Sign up
+                  </button>
+                </Link>
               </div>
             )}
           </>
